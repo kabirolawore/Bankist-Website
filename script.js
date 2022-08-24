@@ -1,12 +1,14 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
+
+///////////////////////////////////////
+// Modal window
 
 const openModal = function (e) {
   e.preventDefault();
@@ -30,6 +32,51 @@ overlay.addEventListener('click', closeModal);
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
     closeModal();
+  }
+});
+
+// ////////////////////
+// Button scrolling
+
+btnScrollTo.addEventListener('click', e => {
+  // const s1Coords = section1.getBoundingClientRect();
+
+  // Scrolling
+  // window.scrollTo({
+  //   left: s1Coords.left + window.pageXOffset,
+  //   top: s1Coords.top + window.pageYOffset,
+  //   behavior: 'smooth',
+  // });
+
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+//////// Page Navigation ////////
+
+// document.querySelectorAll('.nav__link').forEach(el =>
+//   el.addEventListener('click', function (e) {
+//     e.preventDefault();
+//     const id = this.getAttribute('href');
+//     console.log(id);
+
+//     // returned id will be a string
+//     document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+//   })
+// );
+
+// Add event listener to common parent element
+// Determine what element originated the event
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  // console.log(e.target);
+  e.preventDefault();
+
+  //Matching strategy
+  if (e.target.classList.contains('nav__link')) {
+    //
+    const id = e.target.getAttribute('href');
+    // returned id will be a string
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
   }
 });
 
@@ -69,18 +116,25 @@ document.addEventListener('keydown', function (e) {
 // logo.classList.toggle('c');
 // logo.classList.contains('c');
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
+// Random color generator
+// // rgb(255, 255, 255);
 
-btnScrollTo.addEventListener('click', e => {
-  const s1Coords = section1.getBoundingClientRect();
+// const randomNum = (min, max) =>
+//   Math.trunc(Math.random() * (max - min + 1) + min);
+// const randomColor = () =>
+//   `rgb(${randomNum(0, 255)}, ${randomNum(0, 255)}, ${randomNum(0, 255)})`;
+// // console.log(randomColor());
 
-  // Scrolling
-  // window.scrollTo({
-  //   left: s1Coords.left + window.pageXOffset,
-  //   top: s1Coords.top + window.pageYOffset,
-  //   behavior: 'smooth',
-  // });
+// document.querySelector('.nav__link').addEventListener('click', function (e) {
+//   // Remember, the this keyword refers to the element on which the event handler is attached
+//   // Remember not to use an arrow function for the this keyword.
+//   this.style.backgroundColor = randomColor();
+//   // console.log(randomColor());
+// });
 
-  section1.scrollIntoView({ behavior: 'smooth' });
-});
+// document.querySelector('.nav__links').addEventListener('click', function (e) {
+//   // Remember, the this keyword refers to the element on which the event handler is attached
+//   // Remember not to use an arrow function for the this keyword.
+//   this.style.backgroundColor = randomColor();
+//   // console.log(randomColor());
+// });
