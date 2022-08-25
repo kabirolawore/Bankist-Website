@@ -119,16 +119,31 @@ tabsContainer.addEventListener('click', function (e) {
 /////////// Menu fade animation ///////////
 // Again, using event delegation
 // mouseenter does not bubble, use mouseover
-nav.addEventListener('mouseover', function (e) {
+
+const handleHover = function (e) {
+  // console.log(this);
   if (e.target.classList.contains('nav__link')) {
     const link = e.target;
     // console.log(link);
-    const siblings = link.closest('.nav').querySelector('.nav__link');
-    //  we can also use query selector on an element instead of document
-  }
-});
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+    // console.log(siblings);
+    //  we can also use query selector on an element like siblings instead of document
+    const logo = link.closest('.nav').querySelector('img');
 
-nav.addEventListener('mouseout', function (e) {});
+    siblings.forEach(el => {
+      if (el !== link) {
+        el.style.opacity = this;
+      }
+      logo.style.opacity = this;
+    });
+  }
+};
+
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+
+// nav.addEventListener('mouseover', e => handleHover(e, 1)); // re-written as below
+
+nav.addEventListener('mouseout', handleHover.bind(1));
 
 // ///////////////// DOM the Traversing ///////////////
 
