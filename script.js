@@ -139,10 +139,10 @@ const handleHover = function (e) {
   }
 };
 
+// nav.addEventListener('mouseover', e => handleHover(e, 0.5)); // re-written as below
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 
 // nav.addEventListener('mouseover', e => handleHover(e, 1)); // re-written as below
-
 nav.addEventListener('mouseout', handleHover.bind(1));
 
 // ///////////////// DOM the Traversing ///////////////
