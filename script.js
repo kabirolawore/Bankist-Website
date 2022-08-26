@@ -145,6 +145,13 @@ nav.addEventListener('mouseover', handleHover.bind(0.5));
 // nav.addEventListener('mouseover', e => handleHover(e, 1)); // re-written as below
 nav.addEventListener('mouseout', handleHover.bind(1));
 
+//////////// Sticky navigation: Intersection Observer API //////////////
+
+const observerCallback = function () {};
+const observerOptions = { root: null, threshold: 0.1 };
+
+const observer = new IntersectionObserver(observerCallback, observerOptions);
+observer.observe(section1);
 // ///////////////// DOM the Traversing ///////////////
 
 // const h1 = document.querySelector('h1');
