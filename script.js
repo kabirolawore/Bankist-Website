@@ -163,6 +163,7 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 
 const header = document.querySelector('.header');
 const navHeight = nav.getBoundingClientRect().height;
+console.log(navHeight);
 
 const stickyNav = function (entries) {
   const [entry] = entries;
@@ -177,8 +178,8 @@ const stickyNav = function (entries) {
 
 const headerObserver = new IntersectionObserver(stickyNav, {
   root: null,
-  threshold: [0],
-  rootMargin: `${navHeight}px`,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
   // rootMargin: '-90px', //height of the navi, not a good idea to have this hardcoded
 }); // constructor function
 headerObserver.observe(header);
@@ -208,6 +209,38 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+//////////// LAZY Loading Images ////////////
+// Images sometimes load slower on webapages, and then affecting performance
+// important that the images have a low resolution to work properly
+// Lazy loading images could help with boosting performance
+
+const imgTargets = document.querySelectorAll('img[data-src]');
+// console.log(imgTargets);
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+
+  if (!entry.isIntersecting) {
+    return;
+  }
+  // replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  // once the original image has loaded, it will emit the load event
+  // We can then listen for it and do something
+  entry.target.addEventListener('load', () => {
+    // remove the blur on the images after loading
+    entry.target.classList.remove('lazy-img');
+  });
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '-200px',
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
 
 // ///////////////// DOM the Traversing ///////////////
 
