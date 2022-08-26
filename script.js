@@ -296,10 +296,16 @@ const nextSlide = function () {
 
 // Previous slide
 const prevSlide = function () {
-  curSlide--;
-  // console.log(curSlide);
-  if (curSlide < 0) {
+  // curSlide--;
+  // // console.log(curSlide);
+  // if (curSlide < 0) {
+  //   curSlide = maxSlide - 1;
+  // }
+
+  if (curSlide === 0) {
     curSlide = maxSlide - 1;
+  } else {
+    curSlide--;
   }
 
   goToSlide(curSlide); // -100%, 0%, 100%, 200%
@@ -307,6 +313,15 @@ const prevSlide = function () {
 
 btnRight.addEventListener('click', nextSlide);
 btnLeft.addEventListener('click', prevSlide);
+
+// Button Arrowleft and Arrowright control
+document.addEventListener('keydown', e => {
+  // console.log(e.key);
+  if (e.key === 'ArrowLeft') prevSlide(); //1
+  // same as below using shortcircuiting
+  // e.key === 'Arrowleft' && prevSlide();
+  e.key === 'ArrowRight' && nextSlide(); //2
+});
 
 // ///////////////// DOM the Traversing ///////////////
 
