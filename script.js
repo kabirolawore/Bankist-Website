@@ -242,6 +242,34 @@ const imgObserver = new IntersectionObserver(loadImg, {
 
 imgTargets.forEach(img => imgObserver.observe(img));
 
+///////////////// Slider  /////////////////
+
+const slides = document.querySelectorAll('.slide');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+
+let curSlide = 0;
+const maxSlide = slides.length;
+
+const slider = document.querySelector('.slider');
+slider.style.transform = 'scale(.4) translateX(-800px)';
+slider.style.overflow = 'visible';
+
+slides.forEach((slide, index) => {
+  slide.style.transform = `translateX(${100 * index}%)`;
+  // console.log(100 * index);
+}); //0%, 100%, 200%, 300%
+
+// Next slide
+btnRight.addEventListener('click', function () {
+  curSlide++;
+
+  slides.forEach((slide, index) => {
+    slide.style.transform = `translateX(${100 * (index - curSlide)}%)`;
+    console.log(100 * (index - curSlide));
+  }); // -100%, 0%, 100%, 200%
+});
+
 // ///////////////// DOM the Traversing ///////////////
 
 // const h1 = document.querySelector('h1');
