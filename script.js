@@ -252,23 +252,61 @@ let curSlide = 0;
 const maxSlide = slides.length;
 
 const slider = document.querySelector('.slider');
-slider.style.transform = 'scale(.4) translateX(-800px)';
-slider.style.overflow = 'visible';
 
-slides.forEach((slide, index) => {
-  slide.style.transform = `translateX(${100 * index}%)`;
-  // console.log(100 * index);
-}); //0%, 100%, 200%, 300%
+// slides.forEach((slide, index) => {
+//   slide.style.transform = `translateX(${100 * index}%)`;
+//   // console.log(100 * index);
+// }); //0%, 100%, 200%, 300%
+
+// // Next slide
+// btnRight.addEventListener('click', function () {
+//   if (curSlide === maxSlide - 1) {
+//     curSlide = 0;
+//   } else {
+//     curSlide++;
+//   }
+
+//   slides.forEach((slide, index) => {
+//     slide.style.transform = `translateX(${100 * (index - curSlide)}%)`;
+//     // console.log(100 * (index - curSlide));
+//   }); // -100%, 0%, 100%, 200%
+// });
+//
+
+// Slide function (refactoring code above)
+const goToSlide = function (slide) {
+  slides.forEach((s, i) => {
+    s.style.transform = `translateX(${100 * (i - slide)}%)`;
+    // console.log(100 * (index - slide));
+  }); // -100%, 0%, 100%, 200%
+};
+
+goToSlide(0);
 
 // Next slide
-btnRight.addEventListener('click', function () {
-  curSlide++;
+const nextSlide = function () {
+  if (curSlide === maxSlide - 1) {
+    curSlide = 0;
+  } else {
+    curSlide++;
+  }
 
-  slides.forEach((slide, index) => {
-    slide.style.transform = `translateX(${100 * (index - curSlide)}%)`;
-    console.log(100 * (index - curSlide));
-  }); // -100%, 0%, 100%, 200%
-});
+  goToSlide(curSlide); // -100%, 0%, 100%, 200%
+};
+
+// Previous slide
+const prevSlide = function () {
+  curSlide--;
+  // console.log(curSlide);
+  if (curSlide < 0) {
+    curSlide = maxSlide - 1;
+  }
+
+  goToSlide(curSlide); // -100%, 0%, 100%, 200%
+};
+
+btnRight.addEventListener('click', nextSlide);
+btnLeft.addEventListener('click', prevSlide);
 
 // ///////////////// DOM the Traversing ///////////////
 
