@@ -163,7 +163,7 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 
 const header = document.querySelector('.header');
 const navHeight = nav.getBoundingClientRect().height;
-console.log(navHeight);
+// console.log(navHeight);
 
 const stickyNav = function (entries) {
   const [entry] = entries;
@@ -247,11 +247,34 @@ imgTargets.forEach(img => imgObserver.observe(img));
 const slides = document.querySelectorAll('.slide');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
+const dotContainer = document.querySelector('.dots');
 
 let curSlide = 0;
 const maxSlide = slides.length;
 
-const slider = document.querySelector('.slider');
+// create dots
+const createDots = function () {
+  slides.forEach(function (_, i) {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+
+createDots(); //Jump to line 399 for continuation
+
+const activateDot = function (slide) {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
+
+// const slider = document.querySelector('.slider');
 
 // slides.forEach((slide, index) => {
 //   slide.style.transform = `translateX(${100 * index}%)`;
@@ -292,6 +315,7 @@ const nextSlide = function () {
   }
 
   goToSlide(curSlide); // -100%, 0%, 100%, 200%
+  activateDot(curSlide);
 };
 
 // Previous slide
@@ -309,6 +333,7 @@ const prevSlide = function () {
   }
 
   goToSlide(curSlide); // -100%, 0%, 100%, 200%
+  activateDot(curSlide);
 };
 
 btnRight.addEventListener('click', nextSlide);
@@ -323,6 +348,16 @@ document.addEventListener('keydown', e => {
   e.key === 'ArrowRight' && nextSlide(); //2
 });
 
+dotContainer.addEventListener('click', e => {
+  // e.target.classList.contains('dots__dot') && console.log('DOT'); same as below
+  if (e.target.classList.contains('dots__dot')) {
+    // console.log('DOT');
+    // console.log(e.target.dataset);
+    const { slide } = e.target.dataset; // object destructuring
+    goToSlide(slide);
+    activateDot(slide);
+  }
+});
 // ///////////////// DOM the Traversing ///////////////
 
 // const h1 = document.querySelector('h1');
